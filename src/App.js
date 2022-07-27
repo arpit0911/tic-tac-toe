@@ -1,4 +1,3 @@
-import { clear } from "@testing-library/user-event/dist/clear";
 import React, { useState } from "react";
 import "./App.css";
 import { Board } from "./components/Board";
