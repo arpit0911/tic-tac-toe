@@ -1,5 +1,6 @@
 import React from "react";
-import "./box.css";
+import "../App.css";
+
 function Box({ value, onClick, isDisabled }) {
   let style = value === "x" ? "box x" : "box o";
   return (

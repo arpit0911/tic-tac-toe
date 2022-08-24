@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import "./App.css";
 import { Board } from "./components/Board";
-import "./components/box.css";
+import Header from "./components/Header";
+import WinnerBoard from "./components/WinnerBoard";
 
-const Win_Condition = [
+const WIN_CONDITION = [
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
@@ -17,7 +18,7 @@ function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [currPlayer, setPlayer] = useState(true);
   const [winner, setWinner] = useState(null);
-  const [isDisabled, setDisable] = useState(false);
+  const [isDisabled, setIsDisable] = useState(false);
   // let isDisabled = false;
   const handleClick = (boxIdx) => {
     const updateBoard = board.map((value, idx) => {
@@ -32,13 +33,13 @@ function App() {
     setPlayer(!currPlayer);
   };
   const checkWinner = (board) => {
-    for (let i = 0; i < Win_Condition.length; i++) {
-      const [x, y, z] = Win_Condition[i];
+    for (let i = 0; i < WIN_CONDITION.length; i++) {
+      const [x, y, z] = WIN_CONDITION[i];
 
       if (board[x] && board[x] === board[y] && board[y] === board[z]) {
         // console.log(board[x]);
         setWinner(board[x]);
-        setDisable(true);
+        setIsDisable(true);
         // console.log("checking");
         return;
       }
@@ -54,29 +55,22 @@ function App() {
       }
     }
     // console.log("setting tied");
-    setWinner("tied");
-    setDisable(true);
+    setWinner("-");
+    setIsDisable(true);
   }
   function restartGame() {
     setBoard(Array(9).fill(null));
     setPlayer(true);
     setWinner(null);
-    setDisable(false);
+    setIsDisable(false);
   }
   let btnStye =
     isDisabled === false ? "restart-btn isDisable-btn" : "restart-btn";
   return (
     <>
       <div className="container">
-        <div className="heading-container">
-          <h1>
-            tic <span className="dash">-</span> tac{" "}
-            <span className="dash-two">-</span> toe
-          </h1>
-        </div>
-        <div className="winner-display">
-          <span className={`winner-name ${winner}`}>{winner} </span>
-        </div>
+        <Header />
+        <WinnerBoard winner={winner} />
         <Board isDisabled={isDisabled} board={board} onClick={handleClick} />
         <button className={btnStye} onClick={restartGame}>
           Restart
